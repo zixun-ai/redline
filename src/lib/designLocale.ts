@@ -1,0 +1,40 @@
+import type { TemplateId } from "./types";
+
+export const ENGLISH_TEMPLATES: Record<TemplateId, { name: string; note: string }> = {
+  qingjun: { name: "Clean", note: "General-purpose single column in sans serif" },
+  shujuan: { name: "Bookish", note: "Centered layout in Chinese serif" },
+  fenlan: { name: "Sidebar", note: "Skills and education in a left sidebar" },
+  ats: { name: "Plain Text", note: "Easy-to-read text in a single column" },
+  compact: { name: "Compact", note: "Less spacing for longer résumés" },
+  classic: { name: "Classic", note: "Serif type and centered double rules" },
+  executive: { name: "Executive", note: "Wide heading and clear section hierarchy" },
+  formal: { name: "Formal", note: "Spacious layout in Chinese serif" },
+  ledger: { name: "Ledger", note: "Section labels on the left, details on the right" },
+  timeline: { name: "Timeline", note: "Vertical line connects experience entries" },
+  "sidebar-right": { name: "Right Sidebar", note: "Main content on the left, skills and education on the right" },
+  "sidebar-clean": { name: "Clean Sidebar", note: "White sidebar with a fine divider" },
+  columns: { name: "Two Columns", note: "Full-width header above two columns" },
+  banner: { name: "Banner", note: "Accent-color header" },
+  rail: { name: "Accent Rail", note: "Left accent line and simple sections" },
+  editorial: { name: "Editorial", note: "Oversized name with magazine-style type" },
+  card: { name: "Cards", note: "Light backgrounds group related entries" },
+  monogram: { name: "Monogram", note: "Framed name and centered layout" },
+  campus: { name: "Graduate", note: "Education first for early-career applicants" },
+  skills: { name: "Skills", note: "Skills first to highlight your strengths" },
+  portfolio: { name: "Portfolio", note: "Projects first to showcase your work" },
+};
+
+export const ENGLISH_DESIGN_OPTIONS: Readonly<Record<string, string>> = {
+  全部: "All", 简洁: "Minimal", 正式: "Formal", 双栏: "Columns", 创意: "Creative", 侧重点: "Focused",
+  紧凑: "Compact", 标准: "Standard", 宽松: "Relaxed",
+  跟随模板: "Template default", 黑体: "Heiti", 宋体: "Songti", 楷体: "Kaiti", 仿宋: "Fangsong", 圆体: "Rounded",
+  模板默认: "Default for this template", 清晰现代: "Clear and modern", 正式稳重: "Formal and restrained",
+  温和书卷: "Soft and literary", 公文气质: "Traditional document style", 亲和轻松: "Friendly and informal",
+  跟随中文: "Match", 无衬线: "Sans serif", 衬线: "Serif", 等宽: "Mono",
+  下划线: "Underline", 色块: "Block", 竖条: "Bar", 纯文字: "Plain text",
+  窄: "Narrow", 宽: "Wide", 自动: "Automatic", 中文: "Chinese", 方角: "Square", 圆角: "Rounded", 圆形: "Circle",
+  朱红: "Vermilion", 绯红: "Crimson", 赭石: "Ochre", 土金: "Earth gold", 橄榄: "Olive", 松绿: "Pine green",
+  青碧: "Teal", 湖蓝: "Lake blue", 藏蓝: "Navy", 靛青: "Indigo", 紫藤: "Wisteria", 梅紫: "Plum",
+  咖啡: "Coffee", 岩灰: "Slate", 炭灰: "Charcoal", 墨黑: "Ink black",
+  左对齐: "Left", 居中: "Center", 右对齐: "Right",
+};

@@ -1,0 +1,35 @@
+::highlight(redline-quote) { background-color: #f3d58d; color: #282219; text-decoration: underline; }
+.quote-selection { position: absolute; z-index: 2; pointer-events: none; background: #e9b44266; border-bottom: 1px solid #8b640c; }
+.manual-entry { display: inline-flex; align-items: center; gap: 4px; flex: none; padding: 4px 6px; border-radius: 4px; color: var(--pen); white-space: nowrap; }
+.manual-entry:hover, .row-edit:hover { background: var(--pen-soft); }
+.manual-hint { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.manual-fields { max-height: min(360px, 45vh); overflow-y: auto; overscroll-behavior: contain; padding: 4px 2px; }
+.manual-fields label, .row-editor label { display: block; margin: 7px 0; font-size: 12px; color: var(--muted); }
+.manual-fields input, .manual-fields textarea { display: block; box-sizing: border-box; width: 100%; margin-top: 4px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 5px; background: var(--raised); color: var(--ink); font-size: 13px; line-height: 1.5; }
+.composer .manual-fields textarea { padding: 6px 8px; border: 1px solid var(--line); resize: vertical; min-height: 58px; max-height: 160px; }
+.manual-fields input:focus, .manual-fields textarea:focus { outline: 2px solid var(--pen); outline-offset: 1px; }
+.manual-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 8px; }
+.manual-actions button { padding: 5px 10px; border-radius: 5px; font-size: 12px; }
+.manual-actions .manual-save { background: var(--ink); color: var(--raised); }
+.manual-error { margin-top: 7px; color: var(--warn); font-size: 12px; }
+.pin.pin-group { width: 34px; border-radius: 12px 12px 12px 3px; }
+/* A menu: the shadow's ring is its edge, so no border; crisp, never a big soft blur. It opens from its pin. */
+.pin-list { position: absolute; z-index: 6; box-sizing: border-box; display: grid; gap: 2px; width: 240px; max-height: 240px; overflow-y: auto; overscroll-behavior: contain; padding: 4px; background: var(--raised); border-radius: 8px; box-shadow: var(--shadow-menu); transform-origin: 12px 0; animation: menu-in 150ms var(--ease-out) both; }
+@keyframes menu-in { from { opacity: 0; transform: scale(.97); } }
+/* Each row fades its own fill in place; none slides between rows. */
+.pin-list button { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 0 8px; text-align: left; border-radius: var(--r-s); transition: background-color 150ms var(--ease-out), transform 150ms var(--ease-out); }
+.pin-list button:active { transform: scale(.99); }
+.pin-list button:focus-visible { outline: 0; background: var(--hover); }
+@media (hover: hover) and (pointer: fine) { .pin-list button:hover { background: var(--hover); } }
+@media (prefers-reduced-motion: reduce) { .pin-list { animation-name: fade; } .pin-list button:active { transform: none; } }
+.pin-list b { color: var(--pen); }
+.pin-list span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.proposal-row { cursor: default; }
+.row-content { flex: 1; min-width: 0; }
+.row-edit { display: inline-flex; align-items: center; gap: 3px; margin-top: 3px; padding: 3px 5px; border-radius: 4px; color: var(--muted); font-size: 11px; }
+.row-editor textarea { margin-top: 4px; color: var(--ink); }
+.job-history { display: flex; flex-direction: column; gap: 3px; margin: 8px 0; }
+.job-history span, .job-history button { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; text-align: left; font-size: 11px; }
+.job-history span { color: var(--pen); }
+.job-history button { padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; }
+.job-covered { display: block; margin-top: 8px; color: var(--add); font-size: 12px; font-weight: 600; }

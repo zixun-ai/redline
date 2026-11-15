@@ -1,0 +1,183 @@
+/* The resume itself. Sizes are in pt and mm so the screen and the PDF agree. */
+.resume { min-height: 297mm; padding: calc(13mm * var(--gap)) var(--mx); background: #fff; color: #222; font-family: var(--sans); font-size: var(--fs); line-height: 1.5; cursor: default; overflow-wrap: anywhere; }
+.resume h1, .resume h2, .resume p, .resume ul { margin: 0; }
+.resume ul { padding: 0; list-style: none; }
+.resume { color-scheme: light; --warn: #8a5707; --warn-soft: #fbf1dd; --pen-soft: #faeae5; }
+.resume a { color: inherit; text-decoration: underline; text-underline-offset: .15em; }
+.resume .inline-bold { font-weight: 700; }
+.resume mark { border-radius: .25em; background: var(--warn-soft); color: var(--warn); box-shadow: 0 0 0 1px #d5a95f; cursor: text; }
+.resume :is(.summary, .item li, .passage p) { white-space: pre-wrap; }
+.resume h1 { font-size: 2.3em; line-height: 1.2; font-weight: 600; color: #111; letter-spacing: .04em; }
+.resume .role { margin-top: .15em; font-size: 1.1em; color: var(--accent); }
+.resume .contact { margin-top: .3em; color: #555; font-size: .92em; }
+.resume .contact i { margin: 0 .5em; font-style: normal; color: #aaa; }
+.resume .contact.info { margin-top: .1em; }
+.layout-sidebar .contact-list.info { margin-top: .4em; }
+.resume .summary { margin-top: calc(1em * var(--gap)); color: #333; }
+.resume .sec { margin-top: calc(1.25em * var(--gap)); }
+/* The rule under a heading is the heading's own color, faded, rather than black under red. */
+.resume h2 { margin-bottom: calc(.5em * var(--gap)); padding-bottom: .2em; border-bottom: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); font-size: 1.1em; font-weight: 600; color: var(--accent); }
+.resume .item + .item { margin-top: calc(.75em * var(--gap)); }
+.resume .item-head { display: flex; align-items: baseline; gap: .7em; }
+.resume .item-head strong { min-width: 0; font-weight: 600; color: #111; }
+/* Three steps of gray: the name, what it was, when. */
+.resume .item-head .sub { min-width: 0; color: #525252; }
+.resume .item-head time { margin-left: auto; flex: 0 1 auto; min-width: 0; color: #707070; font-size: .92em; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+/* A skill row is a point like a bullet, so it carries the same dot. */
+.resume .item li, .resume .skill { position: relative; padding-left: 1em; }
+/* Lines inside a point sit closer than the points do, so each achievement reads as its own block. */
+.resume .item li { margin-top: calc(.2em * var(--gap)); }
+.resume .item li + li { margin-top: calc(.36em * var(--gap)); }
+.resume .item li::before, .resume .skill::before { content: ""; position: absolute; left: .25em; top: .63em; width: .24em; height: .24em; border-radius: 50%; background: #666; }
+.resume .skill + .skill { margin-top: calc(.25em * var(--gap)); }
+.resume .skill b { margin-right: .8em; font-weight: 600; color: #111; }
+.resume .skill > span + span { margin-left: .8em; }
+.resume .passage { color: #333; }
+.resume .passage p + p { margin-top: calc(.2em * var(--gap)); }
+.t-shujuan { font-family: var(--serif); }
+.t-shujuan header { text-align: center; }
+.t-shujuan h1 { font-weight: 700; letter-spacing: .2em; }
+.t-shujuan h2 { display: flex; align-items: center; gap: .8em; border: 0; color: #111; font-weight: 700; letter-spacing: .25em; }
+.t-shujuan h2::after { content: ""; flex: 1; border-top: 1px solid var(--accent); }
+.t-shujuan .item li::before, .t-shujuan .skill::before { background: var(--accent); }
+.t-shujuan .summary, .t-shujuan .passage p { text-indent: 2em; }
+.layout-sidebar { padding: 0; display: flex; }
+.layout-sidebar .split { flex: 1; min-width: 0; display: grid; grid-template-columns: 62mm minmax(0, 1fr); }
+.layout-sidebar aside { min-width: 0; padding: calc(13mm * var(--gap)) 7mm 12mm calc(var(--mx) * .6); background: color-mix(in srgb, var(--accent) 7%, #fff); }
+.layout-sidebar main { padding: calc(13mm * var(--gap)) calc(var(--mx) * .8) 12mm 9mm; min-width: 0; }
+.layout-sidebar h1 { font-size: 2em; }
+.layout-sidebar .contact-list { margin-top: .7em; color: #444; font-size: .92em; overflow-wrap: anywhere; }
+.layout-sidebar aside .item-head { flex-wrap: wrap; gap: 0 .6em; }
+.layout-sidebar aside .item-head strong { flex-basis: 100%; }
+.layout-sidebar aside .item-head time { margin-left: 0; }
+/* The lines below make the label a line of its own. Kept inline, it shares that line with the dot when the row is centered. */
+.layout-sidebar aside .skill b { margin: 0; }
+.layout-sidebar aside .skill > span { display: block; margin-left: 0; }
+.layout-sidebar main .summary { margin-top: 0; }
+.layout-sidebar main .sec:first-child { margin-top: 0; }
+.resume header { position: relative; min-height: 0; }
+.resume .photo { display: block; width: 24mm; height: 33.6mm; object-fit: cover; }
+.resume.photo-rounded .photo { border-radius: 3mm; }
+.resume.photo-circle .photo { height: 24mm; border-radius: 50%; }
+.resume header .photo { position: absolute; right: 0; top: 0; }
+.resume header:has(.photo) { min-height: 34mm; padding-right: 28mm; }
+.t-shujuan header:has(.photo) { padding-left: 28mm; }
+.layout-sidebar .side-basics .photo { margin-bottom: 4mm; }
+.resume { font-variant-numeric: lining-nums; }
+
+/* Template structure; explicit heading and component choices below still win. */
+.t-ats h1 { font-size: 2em; letter-spacing: 0; }
+.t-ats .role, .t-ats.h-line h2 { color: #222; }
+.t-ats.h-line h2 { border-bottom: 0; padding-bottom: 0; }
+.t-compact h1 { font-size: 2em; }
+.t-compact .item-head { gap: .5em; }
+.t-classic header, .t-formal header, .t-monogram header { text-align: center; }
+.t-classic header { border-block: 1px solid var(--accent); padding-block: 3mm; }
+.t-classic h1 { font-weight: 700; letter-spacing: .12em; }
+.t-classic.h-line h2 { color: #222; border-bottom-style: double; border-bottom-width: 3px; }
+.t-executive header { border-block-start: 2.5mm solid var(--accent); border-block-end: .4mm solid var(--accent); padding-block: 4mm; }
+.t-executive h1 { font-size: 2.6em; }
+.t-executive.h-line h2 { border: 0; padding-inline-start: .6em; border-inline-start: 3px solid var(--accent); }
+.t-formal h1 { font-weight: 700; letter-spacing: .2em; }
+.t-formal .role, .t-formal.h-line h2 { color: #222; }
+.t-formal .summary, .t-formal .passage { text-indent: 2em; }
+.t-ledger .sec { display: grid; grid-template-columns: 26mm minmax(0, 1fr); column-gap: 6mm; }
+.t-ledger .sec > h2 { grid-column: 1; grid-row: 1; align-self: start; }
+.t-ledger .sec > :not(h2) { grid-column: 2; min-width: 0; }
+.t-ledger.h-line h2 { border: 0; }
+.t-timeline .sec:not([data-kind="skill"]) .item { position: relative; margin-inline-start: 1.2mm; padding-inline-start: 5mm; border-inline-start: 1px solid color-mix(in srgb, var(--accent) 35%, #fff); }
+.t-timeline .sec:not([data-kind="skill"]) .item::before { content: ""; position: absolute; inline-size: 2mm; block-size: 2mm; inset-inline-start: -1.1mm; inset-block-start: .45em; border-radius: 50%; background: var(--accent); }
+.t-sidebar-right .split { grid-template-columns: minmax(0, 1fr) 62mm; }
+.t-sidebar-right main { padding-inline: var(--mx) 8mm; }
+.t-sidebar-right aside { padding-inline: 7mm calc(var(--mx) * .6); }
+.t-sidebar-clean aside { background: #fff; border-inline-end: 1px solid color-mix(in srgb, var(--accent) 25%, #fff); }
+.t-columns .section-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 8mm; align-items: start; }
+.t-columns .sec { min-width: 0; }
+.t-columns .item-head { flex-wrap: wrap; gap: 0 .7em; }
+.t-columns .item-head strong { flex-basis: 100%; }
+.t-banner header { background: var(--accent); color: var(--on-accent); padding: 5mm; border-radius: 1mm; }
+.t-banner header :is(h1, .role, .contact, .contact i) { color: inherit; }
+.t-banner header:has(.photo) { padding-inline-end: 34mm; min-height: 44mm; }
+.t-banner header .photo { inset: 5mm 5mm auto auto; }
+.t-rail { border-inline-start: 3mm solid var(--accent); }
+.t-rail header { padding-inline-start: 4mm; border-inline-start: 1mm solid var(--accent); }
+.t-rail.h-line h2 { border: 0; padding: .15em .5em; background: color-mix(in srgb, var(--accent) 8%, #fff); }
+.t-editorial h1 { font-size: 3em; letter-spacing: -.02em; }
+.t-editorial header { border-block-end: 1.5mm solid #222; padding-block-end: 4mm; }
+.t-editorial.h-line h2 { letter-spacing: .15em; color: #222; border-color: #222; }
+.t-card .sec { padding: 3mm 4mm; background: color-mix(in srgb, var(--accent) 5%, #fff); border-radius: 2mm; }
+.t-card.h-line h2 { border: 0; }
+.t-monogram h1 { display: inline-block; border: .6mm solid var(--accent); padding: .15em .6em; letter-spacing: .15em; }
+.t-monogram header .role { margin-block-start: .5em; }
+.t-monogram.h-line h2 { text-align: center; border-bottom: 0; border-block-start: 1px solid color-mix(in srgb, var(--accent) 30%, #fff); padding-block-start: .45em; }
+.t-campus header { border-block-end: 1px solid var(--accent); padding-block-end: 3mm; }
+.t-campus .sec[data-kind="education"] { padding: 3mm; background: color-mix(in srgb, var(--accent) 6%, #fff); }
+.t-skills .sec[data-kind="skill"] .skill { padding: 2mm 3mm; border-inline-start: .7mm solid var(--accent); background: color-mix(in srgb, var(--accent) 5%, #fff); }
+.t-skills .sec[data-kind="skill"] .skill::before { content: none; }
+.t-portfolio .sec[data-kind="project"] .item { padding-inline-start: 3mm; border-inline-start: .7mm solid var(--accent); }
+.t-portfolio h1 { color: var(--accent); }
+.t-classic header:has(.photo), .t-formal header:has(.photo), .t-monogram header:has(.photo) { padding-inline-start: 28mm; }
+.t-classic header:has(.photo), .t-executive header:has(.photo) { min-height: 43mm; }
+.t-classic header .photo, .t-executive header .photo { top: 3mm; }
+
+.resume.h-block h2 { padding: .15em .6em; border: 0; border-radius: 2px; background: var(--accent); color: var(--on-accent); }
+.resume.h-bar h2 { padding: 0 0 0 .55em; border: 0; border-left: .22em solid var(--accent); }
+.resume.h-plain h2 { padding: 0; border: 0; }
+.resume.t-shujuan.h-block h2::after, .resume.t-shujuan.h-bar h2::after, .resume.t-shujuan.h-plain h2::after { content: none; }
+.resume.t-shujuan.h-bar h2, .resume.t-shujuan.h-plain h2 { color: var(--accent); }
+/* A choice made on one component beats whatever the template says about that element. */
+.resume .nd-bold, .resume .nd-bold * { font-weight: 700 !important; }
+.resume .nd-color, .resume .nd-color * { color: var(--nd-color) !important; }
+/* 仿宋 has no bold cut and browsers don't fake one, so draw the weight as a hairline stroke. */
+.resume.font-fang :is(h1, h2, strong, b, .nd-bold, .nd-bold *) { -webkit-text-stroke: .3px currentColor; }
+.resume .nd-left { text-align: left; }
+.resume .nd-center { text-align: center; }
+.resume .nd-right { text-align: right; }
+.resume .sec > h2.nd-left { text-align: left; }
+.resume .sec > h2.nd-center { text-align: center; }
+.resume .sec > h2.nd-right { text-align: right; }
+.resume .item li.nd-center, .resume .item li.nd-right, .resume .skill.nd-center, .resume .skill.nd-right { padding-left: 0; }
+.resume .item li.nd-center::before, .resume .item li.nd-right::before, .resume .skill.nd-center::before, .resume .skill.nd-right::before { position: static; display: inline-block; margin-right: .5em; vertical-align: middle; }
+.resume .item-head.nd-center { justify-content: center; }
+.resume .item-head.nd-right { justify-content: flex-end; }
+.resume .item-head.nd-center time, .resume .item-head.nd-right time { margin-left: 0; }
+.resume .item-head.sub-center { display: grid; grid-template-columns: 1fr auto 1fr; }
+.resume .item-head.sub-center time { justify-self: end; margin-left: 0; }
+.resume .item-head.sub-right .sub { margin-left: auto; }
+.resume .item-head.sub-right time { margin-left: 0; }
+.t-shujuan h2.nd-center { justify-content: center; }
+.t-shujuan h2.nd-right { justify-content: flex-end; }
+.t-shujuan h2.nd-center::after, .t-shujuan h2.nd-right::after { content: none; }
+.resume.h-bar h2.nd-center, .resume.h-bar h2.nd-right { border-left: 0; }
+
+/* A clipped, noninteractive copy asks the browser to fragment the committed document before export.
+   The printable heights match the two @page rules below; overflow columns represent later pages. */
+.pagination-probe { position: fixed; inset: 0 auto auto 0; width: 0; height: 0; overflow: hidden; visibility: hidden; pointer-events: none; }
+.pagination-columns { width: 210mm; height: 297mm; column-width: 210mm; column-gap: 0; column-fill: auto; }
+.pagination-columns:has(.multipage) { height: 277mm; }
+.pagination-columns .resume.multipage { min-height: 0; padding-block: 0; }
+/* Generic avoid applies identically to print pages and the measuring columns. */
+.resume.multipage :is(.item, .skill, .item li, .passage p) { break-inside: avoid; }
+.resume.multipage :is(h2, .item-head) { break-after: avoid; }
+.resume.multipage .sec { break-inside: auto; }
+.resume.multipage p { orphans: 2; widows: 2; }
+
+@page { size: A4; margin: 0; }
+@page resume-multi { size: A4; margin: 10mm 0; }
+@media print {
+  html { color-scheme: light; }
+  [data-node] { animation: none !important; }
+  .page-live { display: none !important; }
+  html, body, #root, .app, .workspace, .canvas, .stage { display: block; width: auto !important; height: auto !important; margin: 0; padding: 0; overflow: visible; background: #fff; }
+  .chrome:not(.workspace):not(.canvas) { display: none !important; }
+  /* Tooltips and menus live outside the app, so they need hiding on their own. */
+  [data-radix-popper-content-wrapper] { display: none !important; }
+  .page { width: 210mm; transform: none !important; box-shadow: none; }
+  .print-page { position: static; visibility: visible; }
+  .pagination-probe { display: none !important; }
+  .page-live [data-node] { outline: 0 !important; background: none; }
+  .resume { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .resume mark { background: none; color: inherit; box-shadow: none; }
+  html:has(.print-page .multipage) { page: resume-multi; }
+  .resume.multipage { min-height: 0; padding-block: 0; }
+}

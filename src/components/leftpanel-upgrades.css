@@ -1,0 +1,46 @@
+.content-fold-actions { display: flex; justify-content: flex-end; gap: 2px; margin: -4px -4px 10px; }
+.content-upgrades .sort-grip { flex: none; cursor: grab; -webkit-user-select: none; user-select: none; }
+.content-upgrades .sort-grip:active { cursor: grabbing; }
+.content-upgrades .group-head .sort-grip,
+.content-upgrades .group-head .section-fold { opacity: .7; }
+.content-upgrades [data-drop-target="true"] { outline: 2px solid var(--focus); outline-offset: 2px; }
+.content-upgrades [data-form]:has(> .group-head > .sort-grip:focus-visible),
+.content-upgrades [data-form]:has(> .entry-row > .sort-grip:focus-visible),
+.content-upgrades .bullet:has(> .sort-grip:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.content-upgrades .section-placement { display: flex; align-items: center; gap: 8px; margin: 4px 0 8px; color: var(--muted); font-size: 12px; }
+.content-upgrades .section-placement select { min-width: 0; max-width: 100%; height: 28px; padding: 0 26px 0 10px; border: 0; border-radius: var(--r-s); background: var(--control) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%238f8c86' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 7px center; box-shadow: var(--shadow-button); color: var(--ink); font: inherit; font-size: 12px; cursor: pointer; -webkit-appearance: none; appearance: none; transition: background-color 150ms var(--ease-out), transform 150ms var(--ease-out); }
+/* The trigger is the white secondary button: it squeezes under the press like every other. */
+.content-upgrades .section-placement select:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .content-upgrades .section-placement select:hover { background-color: var(--control-hover); } }
+@media (prefers-reduced-motion: reduce) { .content-upgrades .section-placement select:active { transform: none; } }
+.content-upgrades .section-placement select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.content-upgrades .bullet { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 0 2px; }
+.content-upgrades .bullet::before { display: none; }
+.content-upgrades .bullet > .sort-grip { opacity: .6; }
+.content-upgrades .bullet textarea { width: 100%; }
+.content-upgrades .bullet-tools { grid-column: 2; display: flex; justify-content: flex-end; }
+.content-upgrades .bullet-tools:focus-within .ghost-icon { opacity: 1; }
+.version.version-upgraded { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px; }
+.version-upgraded .version-actions { display: flex; }
+.version-upgraded .version-rename { display: flex; grid-column: 1 / -1; gap: 3px; }
+.version-rename input { flex: 1; min-width: 0; }
+.version-compare-dialog { max-width: 720px; }
+.version-compare-dialog del { color: var(--pen); background: var(--pen-soft); text-decoration: line-through; }
+.version-compare-dialog ins { color: var(--ink); background: color-mix(in srgb, #23873c 16%, var(--raised)); text-decoration: underline; text-underline-offset: 2px; }
+.version-diff { max-height: 48vh; overflow-y: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: 12px; border: 1px solid var(--line); border-radius: var(--r-s); font-size: 13px; line-height: 1.8; }
+.version-design-diff { font-size: 12px; }
+.version-design-diff h3 { font-weight: 600; margin: 8px 0 4px; }
+.version-design-diff ul { list-style: disc; padding-left: 20px; }
+.photo-crop-dialog { max-width: 420px; }
+.photo-crop-preview { display: block; width: auto; height: min(42vh, 420px); max-width: 100%; aspect-ratio: 5 / 7; margin: 6px auto; border: 1px solid var(--line-strong); touch-action: none; cursor: grab; }
+.photo-crop-preview[data-dragging="true"] { cursor: grabbing; }
+.photo-crop-controls { display: grid; gap: 5px; }
+.photo-crop-controls label { display: flex; justify-content: space-between; font-size: 13px; }
+.photo-crop-controls input { width: 100%; accent-color: var(--pen); }
+.photo-pan { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.photo-crop-dialog .dialog-actions, .version-compare-dialog .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+@media (pointer: coarse) {
+  .content-upgrades .sort-grip { display: none; }
+  .content-upgrades .bullet { grid-template-columns: minmax(0, 1fr); }
+  .content-upgrades .bullet-tools { grid-column: 1; }
+}

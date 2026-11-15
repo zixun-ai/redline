@@ -1,0 +1,35 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "tw-animate-css";
+@import "./styles.css" layer(components);
+
+/* No preflight: its reset would reach the resume, whose rendering has to match the PDF. */
+@source "./";
+
+@theme inline {
+  --color-background: var(--surface);
+  --color-foreground: var(--ink);
+  --color-primary: var(--ink);
+  --color-primary-foreground: var(--on-fill);
+  --color-secondary: var(--sunken);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--sunken);
+  --color-muted-foreground: var(--muted);
+  --color-accent: var(--sunken);
+  --color-accent-foreground: var(--ink);
+  --color-destructive: var(--pen);
+  --color-destructive-foreground: var(--on-fill);
+  --color-border: var(--line);
+  --color-input: var(--line-strong);
+  --color-ring: var(--focus);
+  --color-popover: var(--raised);
+  --color-popover-foreground: var(--ink);
+  --color-raised: var(--raised);
+  --color-pen: var(--pen);
+  --color-pen-soft: var(--pen-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  /* The controls' one shadow, in the desk's warm tint rather than Tailwind's black. */
+  --shadow-xs: 0 1px 2px 0 rgba(28, 25, 23, .06);
+}
