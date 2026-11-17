@@ -2,9 +2,9 @@
 
 Redline is a local-first résumé editor. Edit the sample résumé, compare AI suggestions with the original text, and export to PDF. Suggestions change the résumé after you accept them.
 
-[Try Redline in your browser](https://zixun-ai.github.io/redline-public/) · [Offline HTML](./Redline.html) · [中文使用说明](#中文使用说明)
+[Try Redline in your browser](https://zixun-ai.github.io/redline/) · [Offline HTML](./Redline.html) · [中文使用说明](#中文使用说明)
 
-[![Watch the 42-second Redline demo](./docs/demo-poster.jpg)](https://zixun-ai.github.io/redline-public/redline-demo.mp4)
+[![Watch the 42-second Redline demo](./docs/demo-poster.jpg)](https://zixun-ai.github.io/redline/redline-demo.mp4)
 
 The 42-second demo has sound and uses the Chinese interface. It covers asking for a revision, reviewing the changes, checking flagged claims, tailoring to a job, and switching templates.
 
@@ -27,7 +27,7 @@ The screenshot uses the sample résumé and a simulated AI suggestion.
 
 ## 中文使用说明
 
-[观看 42 秒演示视频](https://zixun-ai.github.io/redline-public/redline-demo.mp4)（中文界面，有声音）。
+[观看 42 秒演示视频](https://zixun-ai.github.io/redline/redline-demo.mp4)（中文界面，有声音）。
 
 在画布或左栏编辑简历。选中文字后，可以留下批注，让 AI 提出修改建议。你可以预览、调整、拒绝或接受修改。打开在线版即可编辑示例、切换版式和导出 PDF。
 
