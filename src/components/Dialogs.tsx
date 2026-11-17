@@ -47,7 +47,6 @@ export function KeyDialog({ current, remember, settings = AI_DEFAULTS, onSave, o
   const [key, setKey] = useState(current);
   const [config, setConfig] = useState(settings);
   const [rememberKey, setRememberKey] = useState(remember);
-  const rememberId = useId();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const open = useContext(DialogOpen);
@@ -81,15 +80,15 @@ export function KeyDialog({ current, remember, settings = AI_DEFAULTS, onSave, o
     <Dialog title={destination(config, english) === "api.deepseek.com" ? t("连接 DeepSeek", "Connect to DeepSeek") : t("连接 AI 服务", "Connect to an AI service")} onClose={() => { isOpen.current = false; cancel(); onClose(); }}>
       <p className="dialog-note">
         {t(
-          `Key 默认只在当前页面使用，刷新后需重新填写。勾选“记住 API Key”后会保存在此浏览器，请勿在共用电脑上勾选。验证只发送极小的测试消息，不发送简历。当前目标：${destination(config, english)}。`,
-          `The API key stays on this page until you reload. Select “Remember API key” to save it in this browser. Leave it unchecked on shared computers. Verification sends only a short test message. Destination: ${destination(config, english)}.`,
+          `默认刷新后清除 Key。勾选“记住 API Key”会保存到此浏览器，共用电脑请勿勾选。验证仅向 ${destination(config, english)} 发送测试消息，不发送简历。`,
+          `Reloading clears the key unless you save it in this browser. Leave “Remember API key” unchecked on shared computers. Verification sends a test message to ${destination(config, english)} and excludes your résumé.`,
         )}
       </p>
       <label className="field"><span>Base URL</span>
         <Input type="url" value={config.baseUrl} maxLength={2048} autoCapitalize="none" spellCheck={false} placeholder="https://api.deepseek.com"
           onChange={(e) => { cancel(); setConfig({ ...config, baseUrl: e.target.value }); setKey(""); setRememberKey(false); setError(""); }} />
       </label>
-      <p className="dialog-note">{t("支持兼容 OpenAI 的 Chat Completions 接口，可填写带 /v1 的地址。更改 Base URL 会清空 Key，请重新填写该服务的 Key；仅本机地址允许 HTTP。", "Use an OpenAI-compatible Chat Completions API. The URL can end in /v1. Changing the Base URL clears the key so you can enter one for the new service. Use HTTPS except for local addresses.")}</p>
+      <p className="dialog-note">{t("填写兼容 OpenAI Chat Completions 的地址，可带 /v1。更改地址后需重新填写 Key。仅本机地址允许 HTTP。", "Use an OpenAI-compatible Chat Completions URL, with or without /v1. Re-enter the key if you change the URL. Use HTTPS except for local addresses.")}</p>
       <label className="field"><span>{t("模型名称", "Model name")}</span>
         <Input value={config.model} maxLength={128} autoCapitalize="none" spellCheck={false}
           onChange={(e) => { cancel(); setConfig({ ...config, model: e.target.value }); setError(""); }} />
@@ -99,15 +98,14 @@ export function KeyDialog({ current, remember, settings = AI_DEFAULTS, onSave, o
         <Input type="password" autoFocus value={key} placeholder="sk-…" autoComplete="off"
           onChange={(e) => { cancel(); setKey(e.target.value); setError(""); }} onKeyDown={(e) => e.key === "Enter" && !e.nativeEvent.isComposing && void save()} />
       </label>
-      <div className="flex items-center gap-2 text-sm">
-        <input id={rememberId} type="checkbox" checked={rememberKey} className="size-4 accent-primary"
+      <label className="flex w-fit cursor-pointer items-center gap-2 text-sm pointer-coarse:min-h-11">
+        <input type="checkbox" checked={rememberKey} className="size-4 accent-primary"
           onChange={(e) => { cancel(); setRememberKey(e.target.checked); }} />
-        <label htmlFor={rememberId}>{t("记住 API Key", "Remember API key")}</label>
-      </div>
+        {t("记住 API Key", "Remember API key")}
+      </label>
       {error && <p className="dialog-error" role="alert">{localizeError(error, english)}</p>}
       <div className="dialog-foot">
         {destination(config, english) === "api.deepseek.com" && <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noreferrer">{t("获取 API Key", "Get an API key")}<ExternalLink size={12} /></a>}
-        <span className="model">{config.model}</span>
         {current && <Button variant="outline" onClick={() => { cancel(); onSave("", false, settings); }}>{t("移除", "Remove")}</Button>}
         <Button disabled={!key.trim() || busy} onClick={() => void save()}>
           {busy && <Loader2 size={13} className="spin" />}{t("验证并保存", "Verify and save")}

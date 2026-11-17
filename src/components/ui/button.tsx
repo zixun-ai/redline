@@ -21,11 +21,11 @@ const buttonVariants = cva(
         attention: "bg-primary text-primary-foreground shadow-(--shadow-primary) hover:bg-(--primary-hover)",
       },
       size: {
-        default: "h-8 px-3",
-        sm: "h-7 rounded-md px-2 text-xs",
+        default: "h-8 px-3 pointer-coarse:min-h-11",
+        sm: "h-7 rounded-md px-2 text-xs pointer-coarse:min-h-11",
         // Smaller targets squeeze deeper, and fade further when off.
-        icon: "h-7 w-7 active:not-disabled:scale-[.92] disabled:opacity-40",
-        "icon-sm": "h-6 w-6 active:not-disabled:scale-[.92] disabled:opacity-40",
+        icon: "h-7 w-7 active:not-disabled:scale-[.92] disabled:opacity-40 pointer-coarse:size-11 pointer-coarse:shrink-0",
+        "icon-sm": "h-6 w-6 active:not-disabled:scale-[.92] disabled:opacity-40 pointer-coarse:size-11 pointer-coarse:shrink-0",
       },
     },
     defaultVariants: {

@@ -232,6 +232,16 @@ function ThreadCard({ thread, index, doc, active, held, busy, arrival, next, onH
     if (active) ref.current?.scrollIntoView({ block: "nearest", behavior: scrollMotion() });
   }, [active]);
 
+  const first = thread.messages[0];
+  const replies = thread.messages.length - 1;
+  // Only the open thread shows its conversation; the rest fold to the first comment and a reply count,
+  // as in a comment list, with a word on what one still asks of the user.
+  const state = threadState(thread, busy);
+  const folded = !active && !held;
+  const waiting = state === "deciding" ? t("待确认修改", "Suggestion to review")
+    : state === "failed" ? t("请求失败", "Request failed")
+    : state === "open" && thread.messages.at(-1)?.options?.length ? t("待回答", "Needs an answer") : "";
+
   const send = () => {
     if (!draft.trim() || busy) return;
     if (a.onReply(thread.id, draft.trim())) setDraft("");
@@ -244,7 +254,7 @@ function ThreadCard({ thread, index, doc, active, held, busy, arrival, next, onH
   };
 
   return (
-    <div ref={ref} data-thread={thread.id} data-state={threadState(thread, busy)} className={cn("thread", active && "on", arrival >= 0 && "fresh")}
+    <div ref={ref} data-thread={thread.id} data-state={state} className={cn("thread", active && "on", folded && "folded", arrival >= 0 && "fresh")}
       style={arrival > 0 ? { "--i": arrival } as CSSProperties : undefined} onClick={() => a.onActivate(thread)}
       onMouseEnter={() => onHover(thread.id)} onMouseLeave={() => onHover(null)}>
       <div className="thread-head">
@@ -252,6 +262,8 @@ function ThreadCard({ thread, index, doc, active, held, busy, arrival, next, onH
           ? <span className="num done"><Check size={11} strokeWidth={2.5} aria-hidden="true" /><span className="sr-only">{t("已解决", "Resolved")}</span></span>
           : index > 0 && <span className="num">{index}</span>}
         <button className="target" aria-expanded={active}>{label}{gone && t("（已删除）", " (deleted)")}</button>
+        {first && <time className="when" dateTime={new Date(first.at).toISOString()}>{ago(first.at, english)}</time>}
+        {thread.messages.some((m) => m.role === "ai") && <span className="spark" aria-hidden="true" />}
         <IconButton
           size="icon-sm"
           label={thread.resolved ? t("重新打开", "Reopen") : t("标记为已解决", "Mark as resolved")}
@@ -261,9 +273,13 @@ function ThreadCard({ thread, index, doc, active, held, busy, arrival, next, onH
           {thread.resolved ? <RotateCcw size={14} /> : <CircleCheck size={15} />}
         </IconButton>
       </div>
-      {thread.messages.map((m, i) => (
-        <MessageView key={m.id} thread={thread} message={m} doc={doc} last={i === thread.messages.length - 1} busy={busy} active={active} {...a} />
+      {(folded ? thread.messages.slice(0, 1) : thread.messages).map((m, i) => (
+        <MessageView key={m.id} thread={thread} message={m} doc={doc} first={i === 0} last={folded || i === thread.messages.length - 1} busy={busy} active={active} {...a} />
       ))}
+      {folded && !busy && (replies > 0 || waiting) && <p className="replies">
+        {replies > 0 && t(`${replies} 条回复`, `${replies} ${replies === 1 ? "reply" : "replies"}`)}
+        {waiting && <em>{replies > 0 && " · "}{waiting}</em>}
+      </p>}
       {next && (
         <Button variant="outline" size="sm" className="mt-2" autoFocus onClick={(e) => {
           e.stopPropagation();
@@ -285,15 +301,15 @@ function ThreadCard({ thread, index, doc, active, held, busy, arrival, next, onH
   );
 }
 
-function MessageView({ thread, message: m, doc, last, busy, active, ...a }: Actions & {
-  thread: Thread; message: Message; doc: Doc; last: boolean; busy: boolean; active: boolean;
+function MessageView({ thread, message: m, doc, first, last, busy, active, ...a }: Actions & {
+  thread: Thread; message: Message; doc: Doc; first: boolean; last: boolean; busy: boolean; active: boolean;
 }) {
   const { t } = useLanguage();
   // The rail runs on to the next message, and to the thinking line under the last one while DeepSeek works.
   const chain = !last || busy;
   if (m.role === "user") {
     return (
-      <div className={cn("msg", chain && "chain")}>
+      <div className={cn("msg", first && "first", chain && "chain")}>
         {m.quote && <p className="quote"><TextQuote size={12} /><span>{m.quote}</span></p>}
         <p className="user">{m.text}</p>
       </div>
@@ -316,6 +332,18 @@ function MessageView({ thread, message: m, doc, last, busy, active, ...a }: Acti
       {m.proposal && <ProposalCard threadId={thread.id} messageId={m.id} proposal={m.proposal} doc={doc} active={active} {...a} />}
     </div>
   );
+}
+
+/** How long ago, in the short form a comment list uses: 刚刚 / now, 5 分钟 / 5m, 3 小时 / 3h, 2 天 / 2d. */
+function ago(at: number, english: boolean) {
+  const m = Math.floor((Date.now() - at) / 60000);
+  if (m < 1) return english ? "now" : "刚刚";
+  if (m < 60) return english ? `${m}m` : `${m} 分钟前`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return english ? `${h}h` : `${h} 小时前`;
+  const d = Math.floor(h / 24);
+  if (d < 30) return english ? `${d}d` : `${d} 天前`;
+  return new Date(at).toLocaleDateString(english ? "en" : "zh-CN", { month: "short", day: "numeric" });
 }
 
 const STYLE_NAMES: Partial<Record<keyof Design, readonly [string, string]>> = {

@@ -513,7 +513,7 @@ async function comment(page, n, text) {
     await page.locator(".page-live li").nth(i).click();
     await page.locator(".composer textarea").fill(ask);
     await page.keyboard.press("Enter");
-    await page.locator(".proposal.pending").nth(i).waitFor();
+    await page.locator(".thread").nth(i).locator(".proposal.pending").waitFor();
   }
   const card = page.locator(".thread").first();
   const button = card.getByRole("button", { name: "标记为已解决" });
@@ -736,7 +736,7 @@ for (const [entry, run, what, pasted] of [["导入", "开始整理", "import", "
     `a decided formatting card folds to one line saying what it did (${folded.line})`);
   const said = await page.locator(".thread.on .msg.ai").evaluateAll((els) => els.map((el) => el.querySelector(":scope > p")?.innerText ?? ""));
   ok(said[0] === "" && said[1] === "暂时做不到：字号。", `above a formatting card only what can't be done is said (${said.join(" | ") || "nothing"})`);
-  const ring = await page.locator(".thread.on .msg:not(.ai)").first().evaluate((el) => {
+  const ring = await page.locator(".thread.on .msg:not(.ai):not(.first)").first().evaluate((el) => {
     const s = getComputedStyle(el, "::before");
     return { content: s.content, fill: s.backgroundColor, size: parseFloat(s.width) };
   });

@@ -145,12 +145,29 @@ const cases = {
       await page.screenshot({ path: `${out}/dark-${width}.png`, animations: "disabled" });
     }
   },
+
+  async touch_editor_fit(page) {
+    await page.setViewportSize({ width: 320, height: 720 });
+    await button(page, "English").tap();
+    assert.equal(await page.locator(".canvas").evaluate((el) => el.scrollWidth), 320);
+    const line = page.locator(".page-live li").first();
+    await line.tap();
+    const composer = await page.locator(".composer").boundingBox();
+    assert.ok(composer && composer.x >= 0 && composer.x + composer.width <= 320, "the composer must fit even when it is wider than the page");
+    await page.getByRole("button", { name: "Edit text", exact: true }).tap();
+    const field = page.locator(".manual-fields textarea");
+    assert.equal(await field.evaluate((el) => getComputedStyle(el).fontSize), "16px");
+    await page.locator(".compact-nav").getByRole("button", { name: "Content", exact: true }).tap();
+    const [track, active] = await page.locator(".panel.left [role=tablist], .panel.left [role=tab][aria-selected=true]").evaluateAll((els) =>
+      els.map((el) => { const { top, bottom, height } = el.getBoundingClientRect(); return { top, bottom, height }; }));
+    assert.ok(active.height >= 44 && track.top <= active.top && track.bottom >= active.bottom, "the touch tab must fit inside its track");
+  },
 };
 
 try {
   const requested = process.argv.slice(2);
   for (const [id, run] of Object.entries(cases).filter(([id]) => !requested.length || requested.includes(id))) {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce", colorScheme: "light" });
+    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce", colorScheme: "light", hasTouch: id === "touch_editor_fit" });
     await context.route("https://**", (route) => route.abort());
     const page = await context.newPage();
     page.setDefaultTimeout(8000);

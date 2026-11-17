@@ -15,7 +15,7 @@ import "./editor-upgrades.css";
 export const A4_W = 793.7;
 export const A4_H = 1122.5;
 
-export const clampZoom = (z: number) => Math.min(1.4, Math.max(0.5, z));
+export const clampZoom = (z: number) => Math.min(1.4, Math.max(0.3, z));
 
 type Rect = { top: number; left: number; right: number; bottom: number };
 type Quote = { id: string; text: string; start: number; end: number };
@@ -573,7 +573,7 @@ const EDGE = 8;
  * rounds down to whole device pixels (1px on a 1x screen). */
 const ringReach = () => 3 + Math.max(1, Math.floor(1.5 * devicePixelRatio)) / devicePixelRatio;
 
-const FORMAT = "h-[26px] min-w-7 px-0 text-muted-foreground data-[state=on]:bg-pen-soft data-[state=on]:text-pen";
+const FORMAT = "h-[26px] min-w-7 px-0 text-muted-foreground data-[state=on]:bg-pen-soft data-[state=on]:text-pen pointer-coarse:size-11 pointer-coarse:min-w-11";
 
 const TEXT_COLORS = [{ id: "#B4351F", label: ["红色", "Red"] }, { id: "#1D4F91", label: ["蓝色", "Blue"] }, { id: "#1F6B45", label: ["绿色", "Green"] }] as const;
 
@@ -593,7 +593,8 @@ function Composer({ targetId, path, quote, style, onStyle, chips, box, zoom, sta
   const [shift, setShift] = useState(0);
   // The composer's left edge continues the ring's, which also keeps it clear of the column's first glyphs.
   const RING = ringReach();
-  const left = Math.max(8, Math.min((box.left - RING) * zoom, A4_W * zoom - width - 8));
+  const right = A4_W * zoom - width - EDGE;
+  const left = right < EDGE ? (A4_W * zoom - width) / 2 : Math.max(EDGE, Math.min((box.left - RING) * zoom, right));
 
   useLayoutEffect(() => {
     const scroller = canvas.current;

@@ -12,7 +12,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "relative isolate inline-flex h-8 items-center justify-center rounded-lg bg-muted p-0.5 text-muted-foreground",
+      "relative isolate inline-flex h-8 items-center justify-center rounded-lg bg-muted p-0.5 text-muted-foreground pointer-coarse:h-12",
       className
     )}
     {...props}
@@ -27,7 +27,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "relative z-[1] inline-flex items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[13px] font-medium transition-[color] hover:text-foreground data-[pointer]:focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground",
+      "relative z-[1] inline-flex items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[13px] font-medium transition-[color] hover:text-foreground data-[pointer]:focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground pointer-coarse:min-h-11",
       className
     )}
     // Radix calls focus() on mousedown, which Chrome treats as keyboard focus. Keys still show the ring.

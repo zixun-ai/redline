@@ -48,8 +48,8 @@ const DIALOG_EXIT_MS = 140;
 const TOAST_EXIT_MS = 160;
 const room = (leftOpen: boolean, w: Widths) => (window.innerWidth - (window.innerWidth < 1100 ? 32 : panelsWidth(leftOpen, w))) / A4_W;
 const fitZoom = (leftOpen: boolean, w: Widths) => clampZoom(Math.floor(room(leftOpen, w) * 100) / 100);
-/** The zoom a layout starts at: the page's width, in steps of ten, never past 80%. */
-const autoZoom = (leftOpen: boolean, w: Widths) => Math.min(0.8, Math.max(0.5, Math.floor(room(leftOpen, w) * 10) / 10));
+/** Fit the sheet to the available width, up to 80% at the default zoom. */
+const autoZoom = (leftOpen: boolean, w: Widths) => Math.min(0.8, fitZoom(leftOpen, w));
 /** Who set the zoom. The layout's choice and the fit button's keep following the window and the panels; a number the user set stays. */
 type ZoomBy = "layout" | "fit" | number;
 const zoomFor = (by: ZoomBy, leftOpen: boolean, w: Widths) => (typeof by === "number" ? by : by === "fit" ? fitZoom(leftOpen, w) : autoZoom(leftOpen, w));
@@ -628,7 +628,8 @@ export function App({ store }: { store: EditorStore }) {
       notify(t(`体检完成，新增 ${added.length} 条批注。${details}`, `Audit complete. Added ${added.length} ${added.length === 1 ? "comment" : "comments"}. ${details}`));
     }
     setDrafts((d) => ({ ...d, tailor: "" }));
-    setActiveThreadId(null);
+    // Folded comments only show their first line, so open the first new one: there is always a change in view to decide.
+    setActiveThreadId(added[0]?.id ?? null);
     setDialog(null);
   };
 
@@ -698,10 +699,10 @@ export function App({ store }: { store: EditorStore }) {
           <IconButton label={t("撤销", "Undo")} tip={t("撤销 (⌘Z)", "Undo (⌘Z)")} onClick={undo} disabled={!past.length}><Undo2 size={16} /></IconButton>
           <IconButton label={t("重做", "Redo")} tip={t("重做 (⇧⌘Z)", "Redo (⇧⌘Z)")} onClick={redo} disabled={!future.length}><Redo2 size={16} /></IconButton>
           <span className="sep" />
-          <IconButton label={t("缩小", "Zoom out")} onClick={() => setZoomBy(clampZoom(+(zoom - 0.1).toFixed(1)))}><Minus size={15} /></IconButton>
+          <IconButton label={t("缩小", "Zoom out")} onClick={() => setZoomBy(clampZoom(+(zoom - 0.1).toFixed(2)))}><Minus size={15} /></IconButton>
           <button className="zoom" title={t("点击切换 100% 和适合宽度", "Switch between 100% and fit to width")} aria-label={t(`缩放 ${Math.round(zoom * 100)}%，点击切换 100% 和适合宽度`, `Zoom ${Math.round(zoom * 100)}%. Switch between 100% and fit to width.`)}
             onClick={() => setZoomBy(Math.abs(zoom - 1) < 0.005 ? "fit" : 1)}>{Math.round(zoom * 100)}%</button>
-          <IconButton label={t("放大", "Zoom in")} onClick={() => setZoomBy(clampZoom(+(zoom + 0.1).toFixed(1)))}><Plus size={15} /></IconButton>
+          <IconButton label={t("放大", "Zoom in")} onClick={() => setZoomBy(clampZoom(+(zoom + 0.1).toFixed(2)))}><Plus size={15} /></IconButton>
           <span className="sep" />
           {overflow > 0
             ? (
@@ -722,8 +723,8 @@ export function App({ store }: { store: EditorStore }) {
           <Button variant="outline" onClick={() => setDialog("import")}><FileUp size={14} />{t("导入", "Import")}</Button>
           <Button variant="outline" onClick={() => setDialog("audit")}><ScanText size={14} />{t("AI 体检", "AI audit")}</Button>
           <Button variant="outline" onClick={() => setDialog("tailor")}><Target size={14} />{t("按岗位定制", "Tailor to job")}</Button>
-          <Button className="ml-1.5" variant={apiKey ? "default" : "outline"} onClick={exportPdf}><FileDown size={14} />{t("导出 PDF", "Export PDF")}</Button>
         </div>
+        <Button className="export-pdf" variant={apiKey ? "default" : "outline"} onClick={exportPdf}><FileDown size={14} />{t("导出 PDF", "Export PDF")}</Button>
       </header>
 
       {Object.keys(store.recovery).length > 0 && <div className="recovery-notice chrome" role="status">{t("部分旧数据无法读取，已保留原件。", "Some old data could not be read. The original data is still available.")}<Button variant="ghost" onClick={() => download(t("Redline-恢复数据.json", "Redline-recovery-data.json"), JSON.stringify(store.recovery))}>{t("下载恢复数据", "Download recovery data")}</Button></div>}

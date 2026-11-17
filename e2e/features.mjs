@@ -104,6 +104,7 @@ await page.getByRole("button", { name: "开始审阅" }).click();
 await page.locator(".job").waitFor();
 ok(await resetThreads.count() === before + 2, "valid edits become threads and unknown ids are dropped");
 ok((await page.locator(".job").innerText()).includes("Kubernetes 经验"), "uncovered requirements are listed");
+await page.locator(".thread").filter({ hasText: "熟悉 Kubernetes" }).locator(".target").click();
 const risky = page.locator(".proposal").filter({ hasText: "用 Kubernetes" });
 ok((await risky.innerText()).includes("Kubernetes") && await risky.locator(".unsupported").count() === 1, "a posting's term counts as unsupported");
 await page.screenshot({ path: `${out}/8-job.png` });

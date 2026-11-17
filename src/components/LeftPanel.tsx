@@ -373,7 +373,7 @@ export function ContentForm({ hidden = false, tabId, resume, selectedId, onChang
                   {fields.map((f) => {
                     const Icon = ICONS[f.key];
                     return (
-                      <label key={f.key} className="field prop" style={english ? { gridTemplateColumns: "112px minmax(0, 1fr)" } : undefined}>
+                      <label key={f.key} className="field prop" style={english && folds ? { gridTemplateColumns: "112px minmax(0, 1fr)" } : undefined}>
                         <span><Icon size={13} aria-hidden="true" />{t(f.label, ENGLISH_BASICS[f.key])}</span>
                         <Input quiet value={resume.basics[f.key]} placeholder={t("hint" in f ? f.hint : "空", ENGLISH_HINTS[f.key] ?? "Empty")} onChange={(e) => setBasics(f.key, e.target.value)} />
                       </label>
@@ -528,7 +528,7 @@ function VersionsForm({ hidden, tabId, doc, versions, temporary, onSaveVersion, 
       <section className="group">
         <h3>{t("保存当前版本", "Save current version")}</h3>
         <div className="save-row">
-          <Input value={name} aria-label={t("版本名称", "Version name")} placeholder={t("比如：投字节 · 产品岗", "e.g. Product manager application")} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.nativeEvent.isComposing && save()} />
+          <Input value={name} aria-label={t("版本名称", "Version name")} placeholder={t("比如：投字节 · 产品岗", "e.g. Product manager")} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.nativeEvent.isComposing && save()} />
           <Button variant="outline" onClick={save}><Save size={13} />{t("保存", "Save")}</Button>
         </div>
       </section>
@@ -555,7 +555,7 @@ function VersionsForm({ hidden, tabId, doc, versions, temporary, onSaveVersion, 
       </section>
       <section className="group">
         <h3>{t("文件", "Files")}</h3>
-        <div className="file-actions [&>button]:h-auto [&>button]:min-h-7 [&>button]:min-w-0 [&>button]:whitespace-normal [&>button]:py-1">
+        <div className="file-actions [&>button]:h-auto [&>button]:min-h-7 [&>button]:min-w-0 [&>button]:whitespace-normal [&>button]:py-1 pointer-coarse:[&>button]:min-h-11">
           <Button variant="outline" size="sm" onClick={onNewBlank}><FilePlus2 size={13} />{t("新建空白简历", "New blank resume")}</Button>
           <Button variant="outline" size="sm" onClick={onLoadSample}><FileUser size={13} />{t("载入示例", "Load sample")}</Button>
           <Button variant="outline" size="sm" onClick={onBackup}><Download size={13} />{t("下载备份", "Download backup")}</Button>

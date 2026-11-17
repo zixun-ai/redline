@@ -33,3 +33,6 @@
 .job-history span { color: var(--pen); }
 .job-history button { padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; }
 .job-covered { display: block; margin-top: 8px; color: var(--add); font-size: 12px; font-weight: 600; }
+@media (pointer: coarse) {
+  .manual-fields :is(input, textarea), .row-editor textarea { min-height: 44px; font-size: 16px; }
+}

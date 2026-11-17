@@ -207,11 +207,13 @@ const journeys = {
     await panel.locator(".proposal.pending").waitFor();
     j.replies.push(edit("第二条的新写法。"));
     await j.comment(lines.nth(1), "第二条");
-    await panel.locator(".proposal.pending").nth(1).waitFor();
+    // Only the open comment shows its suggestion; the other folds to its first line.
+    await panel.locator('.thread[data-state="deciding"]').nth(1).waitFor();
     const [a, b] = await cards();
     j.ok(same(await tabs(), ["批注2", "已解决"]), "two comments wait under 批注");
 
     const cardA = panel.locator(`[data-thread="${a}"]`);
+    await cardA.locator(".target").click();
     await cardA.getByRole("button", { name: "接受", exact: true }).click();
     await j.until(async () => (await resolved(a)) === true && (await resolved(b)) === false, "accepting a comment's only suggestion resolves it");
     j.ok(same(await tabs(), ["批注1", "已解决1"]), "both tab counts move at once");

@@ -211,6 +211,7 @@ const cases = {
     const proposal = { id: "row-proposal", kind: "content", targetId: item.id, type: "item", before: JSON.stringify(before), after, why: "逐处核对", unsupported: [], status: "pending" };
     await seed(page, { threads: [thread("rows", item.id, "逐处修改", proposal)] });
     await reload(page);
+    await page.locator(".thread .target").click();
     const card = page.locator(".proposal.pending");
     await button(card, "微调第 1 处修改").click();
     await card.getByRole("textbox", { name: "内容", exact: true }).fill("提升 77% 的成果");
@@ -245,6 +246,7 @@ const cases = {
     const proposal = { id: "deleted-row", kind: "content", targetId: item.id, type: "item", before: JSON.stringify(before), after: { ...before, bullets: [] }, why: "核对删除", unsupported: [], status: "pending" };
     await seed(page, { threads: [thread("deletions", item.id, "核对删除", proposal)] });
     await reload(page);
+    await page.locator(".thread .target").click();
     const card = page.locator(".proposal.pending");
     const count = before.bullets.length;
     assert.ok(count > 1);
