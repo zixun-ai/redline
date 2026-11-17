@@ -1,8 +1,29 @@
 # Redline
 
-Open `Redline.html` in desktop Chrome. Select **English** in the top bar to switch the interface. You can edit a résumé locally without an API key. AI features require a key for the configured provider.
+Redline is a local-first résumé editor. Edit the sample résumé, compare AI suggestions with the original text, and export to PDF. Suggestions change the résumé after you accept them.
 
-在画布或左栏编辑简历，也可留下批注让 AI 给出修订方案。AI 建议经你接受后才生效。
+[Try Redline in your browser](https://zixun-ai.github.io/redline-public/) · [Offline HTML](./Redline.html) · [中文使用说明](#中文使用说明)
+
+![Redline preview with the original résumé on the canvas and a proposed revision in the comment panel](./docs/review-preview.png)
+
+The screenshot uses the sample résumé and a simulated AI suggestion.
+
+## Try it
+
+1. Open the demo in desktop Chrome. Select **English** or **中文** to switch the interface. The résumé text stays in its original language.
+2. Double-click a line to edit the sample. Choose a template in **Layout**, then select **Export PDF**. These steps work without an API key.
+3. To try AI review, add your own key in **Comments**. Select text on the résumé and ask for a revision. Compare the suggestion with the original, then accept, adjust, or reject it.
+
+## How review works
+
+- **Review before applying.** Preview changes on the résumé. For suggestions with multiple edits, choose which ones to apply. Undo changes from the editor.
+- **Check added claims.** Redline flags some new claims that lack support in the source text. Check the evidence before you accept them.
+- **Keep a local copy.** Résumés, comments, and versions stay in browser storage. When you use AI, Redline sends the text required for that action to the provider you choose.
+- **Verify the release.** The Chrome tests use simulated AI responses. They cover editing, review, storage, and PDF export across all 21 templates. See the commands below.
+
+## 中文使用说明
+
+在画布或左栏编辑简历。选中文字后，可以留下批注，让 AI 提出修改建议。你可以预览、调整、拒绝或接受修改。打开在线版即可编辑示例、切换版式和导出 PDF。
 
 - 使用：直接用桌面 Chrome 打开 `Redline.html`。点右上角的 **English** 或 **中文** 可切换界面，浏览器会记住选择。切换界面不会修改简历正文和纸面标签。本地编辑不需要 Key；使用 AI 时填入对应服务的 API Key。
 - 编辑：点击组件选择“直接编辑”，或双击正文修改。占位符可直接填写；模块、条目、要点可拖动调序，也保留上下移动按钮和撤销。左栏支持全部展开与收起。正文支持 `**加粗**` 和网址链接；引用批注可跨段选择，多个批注的图钉可逐条定位。
